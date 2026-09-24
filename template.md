@@ -1,0 +1,150 @@
+---
+title: "[Malware Family / Sample Name] — analysis notes"
+date: "2026-09-24"
+category: malware-analysis
+summary: "One or two sentences on what the sample is, how it was found, and the main takeaway for defenders."
+tags: [malware-analysis, threat-intelligence]
+slug: "sample-slug-here"
+featured: false
+draft: true
+---
+
+# [Malware Family / Sample Name]
+
+[Short intro: one paragraph. What was observed vs. what was inferred. Why this sample matters. No live payloads.]
+
+## Start with provenance
+
+Record where the sample came from, how it was handled, and which tools were used. A hash, collection date, and short environment description are usually enough to make the investigation reproducible.
+
+```text
+sample_sha256: <hash>
+sample_md5: <hash>
+sample_sha1: <hash>
+collection: <source and date>
+family: <name or unknown>
+size: <bytes>
+type: <PE32 / ELF / script / doc macro / other>
+handling: isolated analysis environment
+```
+
+## Executive summary
+
+[Bullet or short paragraph: what the sample does, who it targets, and the single most important detection or response idea.]
+
+## Static observations
+
+### File metadata
+
+```text
+File type:     <PE32 executable / ELF / …>
+Compile time:  <timestamp or unknown>
+Packer:        <none / UPX / custom / unknown>
+Imports:       <notable APIs — e.g. CreateRemoteThread, InternetOpenUrl>
+Exports:       <if any>
+Strings:       <notable C2 URLs, mutexes, registry keys>
+```
+
+### Strings and embedded artifacts
+
+```text
+C2 / URLs:     <list>
+Mutex:         <name>
+Registry:      <keys written>
+File paths:    <dropped paths>
+User-agent:    <if present>
+```
+
+### Structural notes
+
+- [Entry point behaviour in one line]
+- [Any obfuscation: XOR, base64, layered packing]
+- [Config / embedded payload location if found]
+
+## Dynamic behaviour
+
+### Environment checks
+
+- [Anti-VM / sandbox checks observed]
+- [Debug / parent-process checks]
+- [User / locale checks]
+
+### Persistence
+
+- [Run keys / services / scheduled tasks / startup folder]
+- [Exact key or path written]
+
+### Network activity
+
+```text
+Protocol:   <HTTP(S) / DNS / raw TCP>
+Beacon:     <interval or irregular>
+User-Agent: <string>
+URI path:   <if any>
+C2:         <host:port — redact if needed>
+```
+
+### Process / file activity
+
+- [Process injection technique if any]
+- [Dropped files and their purpose]
+- [Lateral movement or discovery commands run]
+
+### Observed commands
+
+```text
+<command 1>
+<command 2>
+<command 3>
+```
+
+## Evidence vs. interpretation
+
+Use this section to keep facts separate from inference. Label anything that was not directly observed.
+
+| Observation | Inference | Confidence |
+|---|---|---|
+| [What was seen] | [What you think it means] | High / Med / Low |
+| [What was seen] | [What you think it means] | High / Med / Low |
+
+## Indicators of compromise
+
+### Network
+
+```text
+<ip or domain>
+<ip or domain>
+```
+
+### Host
+
+```text
+<path\to\file>          <sha256>
+HKCU\…\Run\Key         <value>
+Mutex name
+```
+
+### Detection ideas
+
+- [YARA rule sketch or rule name if available]
+- [Sigma / Snort / Suricata idea — one line each]
+- [Log source to watch: Sysmon 1/3/11, proxy, DNS]
+- [Bloom filter / registry path to alert on]
+
+## Defensive value
+
+[What a defender should do differently after reading this. Blocklist ideas, hunting query, configuration hardening. No weaponized code.]
+
+## Limitations and conclusion
+
+- [What could not be fully observed]
+- [Environment gaps: no detonation of final stage, encrypted C2, etc.]
+- [Open questions]
+
+[Closing paragraph: one or two sentences on broader impact and next steps.]
+
+---
+
+**Tools used:** [e.g. Ghidra, Binary Ninja, diec, inetsim, Procmon, Wireshark, Floss]
+
+**References:** [public writeups, CVE if any, vendor advisory]
