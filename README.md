@@ -57,9 +57,16 @@ Pushes to `main` that touch `posts/**` fire `.github/workflows/deploy.yml`, whic
 
 | Secret | Value |
 |--------|--------|
-| `PORTFOLIO_DISPATCH_TOKEN` | Classic PAT with `repo` scope (or a fine-grained PAT that can dispatch on the portfolio repo) |
+| `PORTFOLIO_DISPATCH_TOKEN` | PAT allowed to create repository dispatches on `aaadarsh1337/aaadarsh1337.github.io` |
 
-Without the secret, the notify workflow fails with a clear error. Fallback: the portfolio workflow also runs daily (`15 5 * * *`) and can be run manually from **Actions → Build security blog**.
+Token requirements (creating a dispatch is a **write** operation on the *portfolio* repo, not this one):
+
+- **Classic PAT** — `repo` scope (`public_repo` also works; the portfolio repo is public).
+- **Fine-grained PAT** — `aaadarsh1337/aaadarsh1337.github.io` must appear under **Repository access**, with **Contents: Read and write** (Metadata: Read is granted automatically). A PAT scoped only to `security-blog` returns `403 Resource not accessible by personal access token`.
+
+Without the secret the notify workflow fails immediately; with a mis-permissioned token it fails with a 403 plus a diagnostic (token scopes, target-repo access) in the job log. Re-run it from **Actions → Notify portfolio blog → Run workflow** after fixing the token.
+
+Fallback: the portfolio workflow also runs daily (`15 5 * * *`) and can be run manually from **Actions → Build security blog**.
 
 ---
 
