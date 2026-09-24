@@ -21,11 +21,51 @@ No live payloads. Analysis-only.
 
 ---
 
+## Layout
+
+```text
+security-blog/
+└── posts/
+    └── malware-analysis/
+        ├── template.md          # copy this for a new post (draft: true)
+        └── your-post.md         # set draft: false to publish
+```
+
+The portfolio builder **requires** `posts/` to exist. Posts live under `posts/<category>/`. Root-level files outside `posts/` are ignored.
+
+---
+
+## Writing a new post
+
+1. Copy the template:
+
+```bash
+cp posts/malware-analysis/template.md posts/malware-analysis/my-sample.md
+```
+
+2. Edit frontmatter — at minimum set `title`, `date`, `summary`, `tags`, and `draft: false`.
+
+3. Push to `main`. The portfolio **Build security blog** workflow rebuilds `/blog/` automatically (see below).
+
+---
+
+## Auto-rebuild
+
+Pushes to `main` that touch `posts/**` fire `.github/workflows/deploy.yml`, which sends a `blog-updated` repository dispatch to `aaadarsh1337/aaadarsh1337.github.io`. That repo’s **Build security blog** workflow then regenerates `/blog/` and commits the output.
+
+**One-time setup** — add a repository secret in this repo:
+
+| Secret | Value |
+|--------|--------|
+| `PORTFOLIO_DISPATCH_TOKEN` | Classic PAT with `repo` scope (or a fine-grained PAT that can dispatch on the portfolio repo) |
+
+Without the secret, the notify workflow fails with a clear error. Fallback: the portfolio workflow also runs daily (`15 5 * * *`) and can be run manually from **Actions → Build security blog**.
+
+---
+
 ## Current posts
 
-| Date | Title | Tags | Link |
-|------|-------|------|------|
-| 2026-09-24 | How I structure malware-analysis notes | malware-analysis, threat-intelligence, workflow | [Read →](https://aaadarsh1337.github.io/blog/malware-analysis/how-i-structure-malware-analysis-notes/) |
+_None published yet — add a non-draft post under `posts/`._
 
 ---
 
