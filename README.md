@@ -1,6 +1,6 @@
 # security-blog
 
-Personal security writing by **Adarsh Pillai (@aaadarsh1337)** — malware analysis, reverse engineering notes, defensive workflows, and lab experiments.
+Personal security writing by **Adarsh Pillai (@aaadarsh1337)**: malware analysis, reverse engineering notes, defensive workflows, and lab experiments.
 
 **Live:** [https://aaadarsh1337.github.io/blog/](https://aaadarsh1337.github.io/blog/)
 
@@ -43,7 +43,7 @@ The portfolio builder **requires** `posts/` to exist. Posts live under `posts/<c
 cp posts/malware-analysis/template.md posts/malware-analysis/my-sample.md
 ```
 
-2. Edit frontmatter — at minimum set `title`, `date`, `summary`, `tags`, and `draft: false`.
+2. Edit frontmatter: at minimum set `title`, `date`, `summary`, `tags`, and `draft: false`.
 
 3. Push to `main`. The portfolio **Build security blog** workflow rebuilds `/blog/` automatically (see below).
 
@@ -53,7 +53,7 @@ cp posts/malware-analysis/template.md posts/malware-analysis/my-sample.md
 
 Pushes to `main` that touch `posts/**` fire `.github/workflows/deploy.yml`, which sends a `blog-updated` repository dispatch to `aaadarsh1337/aaadarsh1337.github.io`. That repo’s **Build security blog** workflow then regenerates `/blog/` and commits the output.
 
-**One-time setup** — add a repository secret in this repo:
+**One-time setup**: add a repository secret in this repo:
 
 | Secret | Value |
 |--------|--------|
@@ -61,8 +61,8 @@ Pushes to `main` that touch `posts/**` fire `.github/workflows/deploy.yml`, whic
 
 Token requirements (creating a dispatch is a **write** operation on the *portfolio* repo, not this one):
 
-- **Classic PAT** — `repo` scope (`public_repo` also works; the portfolio repo is public).
-- **Fine-grained PAT** — `aaadarsh1337/aaadarsh1337.github.io` must appear under **Repository access**, with **Contents: Read and write** (Metadata: Read is granted automatically). A PAT scoped only to `security-blog` returns `403 Resource not accessible by personal access token`.
+- **Classic PAT**: `repo` scope (`public_repo` also works; the portfolio repo is public).
+- **Fine-grained PAT**: `aaadarsh1337/aaadarsh1337.github.io` must appear under **Repository access**, with **Contents: Read and write** (Metadata: Read is granted automatically). A PAT scoped only to `security-blog` returns `403 Resource not accessible by personal access token`.
 
 Without the secret the notify workflow fails immediately; with a mis-permissioned token it fails with a 403 plus a diagnostic (token scopes, target-repo access) in the job log. Re-run it from **Actions → Notify portfolio blog → Run workflow** after fixing the token.
 
@@ -72,7 +72,7 @@ Fallback: the portfolio workflow also runs daily (`15 5 * * *`) and can be run m
 
 ## Current posts
 
-_None published yet — add a non-draft post under `posts/`._
+_None published yet: add a non-draft post under `posts/`._
 
 ---
 
